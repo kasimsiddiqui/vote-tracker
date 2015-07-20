@@ -1,7 +1,22 @@
-.highlight{
+.highlight {
   border: 5px solid red;
 }
 
-button{
+button {
   visibility: hidden;
+  margin: auto;
+}
+
+#photo1, #photo2 {
+  display: inline-block;
+  width: 250px;
+  margin: auto;
+}
+
+#photos {
+  width: 90%;
+}
+
+body {
+  font-family: Roboto;
 }

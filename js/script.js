@@ -41,11 +41,7 @@ Tracker.prototype.renderComparison = function(){
 Tracker.prototype.findPhotoInArray = function(url) {
   console.log(url);
   for(var i = 0; i < this.photos.length; i++){
-      console.log(i);
-      console.log(this.photos[i][0].url);
     if(this.photos[i][0].url == url){
-      console.log(i);
-      console.log(this.photos[i][0].url);
       return i;
     }
   }
@@ -71,7 +67,6 @@ var highlight = function(){
     $('button').css({'visibility':'visible'});
     $('.highlight').removeClass('highlight');
     $(this).toggleClass('highlight');
-    console.log('image clicked');
     });
   });
 }
