@@ -1,22 +1,33 @@
+body {
+  font-family: Roboto;
+}
+
+header {
+  text-align: center;
+}
+
 .highlight {
   border: 5px solid red;
 }
 
 button {
-  visibility: hidden;
   margin: auto;
+  display: block;
 }
 
 #photo1, #photo2 {
   display: inline-block;
-  width: 250px;
   margin: auto;
 }
 
 #photos {
-  width: 90%;
+  margin: auto;
+  text-align: center;
 }
 
-body {
-  font-family: Roboto;
+canvas {
+  margin: auto;
+  width:250px;
+  height:250px;
 }
+
