@@ -58,8 +58,8 @@ $(document).ready(function() {
       labels: ["left", "right"],
       datasets: [
         {
-          fillColor: "black",
-          strokeColor: "black",
+          fillColor: "#3E606F",
+          strokeColor: "#3E606F",
           data: [left, right]
         }
       ]
