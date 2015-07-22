@@ -1,28 +1,42 @@
 $(document).ready(function() {
 
   var photos = [];
+  var tracker;
+
+  $.ajax({
+    url: 'https://api.imgur.com/3/album/DDoWy.json',
+    method: 'GET',
+    headers: {
+      'Authorization': 'Client-ID 940f3a2950b0186'
+    }
+  })
+  .done(function(response) {
+    photos = response.data.images;
+    tracker = new Tracker();
+  })
+  .fail(function(error) {
+    console.log(error);
+  });
 
   var Photo = function(url) {
     this.url = url;
-    this.addPhoto();
   };
 
   var Tracker = function() {
-    photos = this.loadLocalData();
-    if(!photos || photos == []) {
-      photos = [];
-      initializePhotos();
+    console.log("creating tracker");
+    this.initializePhotos();
+    var toLoad = this.loadLocalData();
+    if(toLoad) {
+      console.log("loading local data");
+      photos = this.loadLocalData();
     }
     this.renderComparison();
     this.renderChart();
+    this.renderSideChart();
   };
 
   Tracker.prototype.generateRandom = function(max) {
     return Math.floor(Math.random() * max);
-  };
-
-  Tracker.prototype.pickRandomPhoto = function() {
-    return this.generateRandom(photos.length);
   };
 
   Tracker.prototype.renderRandomPhoto = function() {
@@ -31,10 +45,10 @@ $(document).ready(function() {
     return photo;
   };
 
-  Photo.prototype.addPhoto = function() {
-    var photoArray = [this, 0];
-    photos.push(photoArray);
-  };
+  Tracker.prototype.addPhoto = function(photo, index) {
+    var photoArray = [photo, 0];
+    photos[index] = photoArray;
+  }
 
   Tracker.prototype.renderComparison = function() {
     this.saveLocalData();
@@ -50,25 +64,25 @@ $(document).ready(function() {
     highlight();
   };
 
-  var ctx = null;
+  var theChart = null;
   Tracker.prototype.renderChart = function() {
-    var left = this.getVotes($("#photo1 img").attr("src"));
-    var right = this.getVotes($("#photo2 img").attr("src"));
+    var votes1 = this.getVotes($("#photo1 img").attr("src"));
+    var votes2 = this.getVotes($("#photo2 img").attr("src"));
     var chartData = {
-      labels: ["left", "right"],
+      labels: ["Cat 1", "Cat 2"],
       datasets: [
         {
-          fillColor: "#3E606F",
-          strokeColor: "#3E606F",
-          data: [left, right]
+          fillColor: "black",
+          strokeColor: "black",
+          data: [votes1, votes2]
         }
       ]
     };
     var votes = document.getElementById("canvas").getContext("2d");
-    if(ctx) {
-      ctx.destroy();
+    if(theChart) {
+      theChart.destroy();
     }
-    ctx = new Chart(votes).Bar(chartData);
+    theChart = new Chart(votes).Bar(chartData);
   };
 
   Tracker.prototype.findPhotoInArray = function(url) {
@@ -107,12 +121,12 @@ $(document).ready(function() {
   $('button').click(function() {
     $('button').hide();
     tracker.renderComparison();
+    tracker.renderSideChart();
     tracker.renderChart();
   });
 
   var highlight = function() {
     $('img').click(function(e) {
-      $('button').show();
       var url = e.target.getAttribute("src");
       var currentCat = e.target.parentNode.id;
       var otherCat;
@@ -146,15 +160,21 @@ $(document).ready(function() {
           }
           break;
       }
+      if($("#photo1 img").hasClass("highlight") || $("#photo2 img").hasClass("highlight")) {
+        $('button').show();
+      } else {
+        $('button').hide();
+      }
       tracker.renderChart();
     });
   };
 
-  var initializePhotos = function() {
-    for(var i = 0; i <= 13; i++) {
-      var photoURL = "img/" + i + ".jpg";
+  Tracker.prototype.initializePhotos = function() {
+    console.log("initializing the array");
+    for(var i = 0; i < photos.length; i++) {
+      var photoURL = photos[i].link;
       var photo = new Photo(photoURL);
+      this.addPhoto(photo, i);
     };
   };
-  var tracker = new Tracker();
 });
