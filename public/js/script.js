@@ -15,7 +15,6 @@ $(document).ready(function() {
     tracker = new Tracker();
   })
   .fail(function(error) {
-    console.log(error);
   });
 
   var Photo = function(url) {
@@ -23,16 +22,13 @@ $(document).ready(function() {
   };
 
   var Tracker = function() {
-    console.log("creating tracker");
     this.initializePhotos();
     var toLoad = this.loadLocalData();
     if(toLoad) {
-      console.log("loading local data");
       photos = this.loadLocalData();
     }
     this.renderComparison();
     this.renderChart();
-    this.renderSideChart();
   };
 
   Tracker.prototype.generateRandom = function(max) {
@@ -55,7 +51,6 @@ $(document).ready(function() {
     var photo1 = this.renderRandomPhoto();
     var photo2 = this.renderRandomPhoto();
     while(photo1 == photo2){
-      console.log("the photos were the same!");
       var photo1 = this.renderRandomPhoto();
       var photo2 = this.renderRandomPhoto();
     }
@@ -64,25 +59,25 @@ $(document).ready(function() {
     highlight();
   };
 
-  var theChart = null;
+  var ctx = null;
   Tracker.prototype.renderChart = function() {
-    var votes1 = this.getVotes($("#photo1 img").attr("src"));
-    var votes2 = this.getVotes($("#photo2 img").attr("src"));
+    var left = this.getVotes($("#photo1 img").attr("src"));
+    var right = this.getVotes($("#photo2 img").attr("src"));
     var chartData = {
-      labels: ["Cat 1", "Cat 2"],
+      labels: ["Left", "Right"],
       datasets: [
         {
-          fillColor: "black",
-          strokeColor: "black",
-          data: [votes1, votes2]
+          fillColor: "#black",
+          strokeColor: "#black",
+          data: [left, right]
         }
       ]
     };
-    var votes = document.getElementById("canvas").getContext("2d");
-    if(theChart) {
-      theChart.destroy();
+    var votes = document.getElementById("chart").getContext("2d");
+    if(ctx) {
+      ctx.destroy();
     }
-    theChart = new Chart(votes).Bar(chartData);
+    ctx = new Chart(votes).Bar(chartData);
   };
 
   Tracker.prototype.findPhotoInArray = function(url) {
@@ -121,7 +116,6 @@ $(document).ready(function() {
   $('button').click(function() {
     $('button').hide();
     tracker.renderComparison();
-    tracker.renderSideChart();
     tracker.renderChart();
   });
 
@@ -170,7 +164,6 @@ $(document).ready(function() {
   };
 
   Tracker.prototype.initializePhotos = function() {
-    console.log("initializing the array");
     for(var i = 0; i < photos.length; i++) {
       var photoURL = photos[i].link;
       var photo = new Photo(photoURL);
