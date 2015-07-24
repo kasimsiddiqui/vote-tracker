@@ -1,0 +1,25 @@
+{
+  "name": "vote-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kasimsiddiqui/vote-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kasimsiddiqui/vote-tracker/issues"
+  },
+  "homepage": "https://github.com/kasimsiddiqui/vote-tracker#readme",
+  "dependencies": {
+    "express": "^4.13.1",
+    "pg": "4.x",
+    "ejs": "^2.3.1",
+    "cool-ascii-faces": "~1.3.x"
+  }
+}

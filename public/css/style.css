@@ -1,0 +1,125 @@
+body {
+  font-family: Roboto;
+  background-color: #D1DBBD;
+}
+
+header {
+  text-align: center;
+}
+
+.highlight {
+  border: 5px solid #85DB18;
+  border-radius: 3px;
+}
+
+button {
+  margin: auto;
+  display: block;
+}
+
+#photo1, #photo2 {
+  display: inline-block;
+  margin: auto;
+}
+
+#photos {
+  margin: auto;
+  text-align: center;
+}
+
+canvas {
+  margin: auto;
+  width:250px;
+  height:250px;
+}
+
+.android-btn {
+  float: center;
+  display: inline-block;
+  font-weight: 300;
+  background-color: #FFB03B;
+  color: #fff;
+  height: 36px;
+  text-align: center;
+  line-height: 36px;
+  text-transform: uppercase;
+  padding: 0 60px;
+  border-radius: 1px;
+  position: relative;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  cursor: pointer;
+  width: 400px;
+  transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;;
+}
+
+.android-btn.active {
+  background: #455EDE;
+}
+
+.android-btn:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.active:before {
+  content: "";
+  position: absolute;
+  top: -32px; /* (button height - height) / 2 */
+  left: calc(50% - 50px);
+  width: 40px;
+  height: 100px;
+  background-color: #3B50CE;
+  border-radius: 100%;
+
+  -webkit-animation: scaleout 0.3s 1 ease-out;
+  animation: scaleout 0.3s 1 ease-out;
+
+  opacity: 0;
+}
+
+.ink {
+  background: none;
+  color: #1a1a1a;
+}
+
+.ink.active {
+  background: #E0E0E0;
+}
+
+.ink.active:before {
+  background: #BDBDBD;
+}
+
+/* Anmiation from http://tobiasahlin.com/spinkit/ */
+
+@-webkit-keyframes scaleout {
+  0% {
+    opacity: 1;
+    -webkit-transform: scale(0.0)
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes scaleout {
+  0% {
+    opacity: 1;
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 100% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
